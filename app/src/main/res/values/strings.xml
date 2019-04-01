@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MyFirstApp</string>
+    <string name="app_name" translatable="false">内涵段子</string>
     <string name="edit_message" translatable="false">Enter a message</string>
     <string name="button_send" translatable="false">Send</string>
     <string name="write">写点嘛~</string>

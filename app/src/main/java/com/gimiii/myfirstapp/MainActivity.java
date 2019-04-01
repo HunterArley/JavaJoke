@@ -1,11 +1,15 @@
 package com.gimiii.myfirstapp;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.gimiii.baselibrary.ExceptionCrashHandler;
+import com.gimiii.baselibrary.fixBug.FixDexManager;
 import com.gimiii.framelibrary.BaseSkinActivity;
 
 import java.io.File;
@@ -32,8 +36,29 @@ public class MainActivity extends BaseSkinActivity {
             //上传到服务器
             Log.e(TAG, "上传异常文件");
         }
-
+        fixDexBug();
     }
+
+    /**
+     * 修复文件
+     */
+    private void fixDexBug() {
+        //每次启动的时候，去后台获取差分包fix.apatch，然后修复本地的BUG
+        //测试，直接获取本地内存卡中的fix.apatch
+        File file = new File(Environment.getExternalStorageDirectory(), "fix.apatch");
+        if (file.exists()) {
+            //修复BUG
+            FixDexManager fixDexManager = new FixDexManager(this);
+            try {
+                fixDexManager.fixDex(file.getAbsolutePath());
+                Toast.makeText(this, "修复成功", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "修复失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     @Override
     protected void initView() {
@@ -42,7 +67,16 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-
+        DefaultNavigationBar navigationBar = new DefaultNavigationBar.Builder(this, (ViewGroup) findViewById(R.id.view))
+                .setTitle("我是title")
+                .setRight("发布")
+                .setRightClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "点击发布没成功", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .builder();
     }
 
     @Override
@@ -52,7 +86,10 @@ public class MainActivity extends BaseSkinActivity {
 
     @OnClick(R.id.btnSkip)
     public void onViewClicked() {
-        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
-        int i = 2 / 0;
+        showDialog();
+    }
+
+    private void showDialog() {
+
     }
 }

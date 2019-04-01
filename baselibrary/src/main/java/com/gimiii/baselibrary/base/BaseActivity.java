@@ -1,4 +1,4 @@
-package com.gimiii.baselibrary;
+package com.gimiii.baselibrary.base;
 
 import android.content.Intent;
 import android.os.Bundle;
