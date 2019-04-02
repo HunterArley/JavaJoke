@@ -8,10 +8,10 @@ import com.gimiii.baselibrary.navigation.AbsNavigationBar;
 
 public class DefaultNavigationBar<D extends AbsNavigationBar.Builder.AbsNavigationParams> extends AbsNavigationBar<DefaultNavigationBar.Builder.DefaultNavigationParams> {
 
+
     public DefaultNavigationBar(DefaultNavigationBar.Builder.DefaultNavigationParams params) {
         super(params);
     }
-
     @Override
     public int bindLayout() {
         return R.layout.title_bar;
@@ -22,7 +22,14 @@ public class DefaultNavigationBar<D extends AbsNavigationBar.Builder.AbsNavigati
         //绑定效果
         setText(R.id.title, getParams().mTitle);
         setText(R.id.rightText, getParams().mRightText);
-        setOnClickListener(R.id.title, getParams().mRightClickListener);
+        setText(R.id.leftText,getParams().mLeftText);
+        setImageResource(R.id.leftIcon,getParams().mLeftIconRes);
+        setImageResource(R.id.rightIcon,getParams().rightIconRes);
+        setOnClickListener(R.id.rightText, getParams().mRightClickListener);
+        setOnClickListener(R.id.rightIcon, getParams().mRightClickListener);
+        setOnClickListener(R.id.leftText, getParams().mLeftClickListner);
+        setOnClickListener(R.id.leftIcon, getParams().mLeftClickListner);
+        setBackgroundColor(R.id.titleBar,getParams().bgColor);
     }
 
     public static class Builder extends AbsNavigationBar.Builder {
@@ -80,7 +87,6 @@ public class DefaultNavigationBar<D extends AbsNavigationBar.Builder.AbsNavigati
         }
 
         public static class DefaultNavigationParams extends AbsNavigationParams {
-
             //标题
             public String mTitle;
             public String mRightText;
@@ -94,8 +100,6 @@ public class DefaultNavigationBar<D extends AbsNavigationBar.Builder.AbsNavigati
             public int bgColor;
             //左边点击事件
             public View.OnClickListener mLeftClickListner;
-
-            //所有效果
 
             public DefaultNavigationParams(Context context, ViewGroup parent) {
                 super(context, parent);

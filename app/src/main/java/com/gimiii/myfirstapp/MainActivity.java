@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
-
         //获取上次的崩溃信息上传到服务器
         File crashFile = ExceptionCrashHandler.getExceptionCrashHandler().getCrashFile();
         if (crashFile.exists()) {
@@ -59,7 +57,6 @@ public class MainActivity extends BaseSkinActivity {
         }
     }
 
-
     @Override
     protected void initView() {
 
@@ -67,9 +64,11 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-        DefaultNavigationBar navigationBar = new DefaultNavigationBar.Builder(this, (ViewGroup) findViewById(R.id.view))
+        DefaultNavigationBar navigationBar = new DefaultNavigationBar.Builder(this, null)
                 .setTitle("我是title")
                 .setRight("发布")
+                .setLeftIcon(R.mipmap.back_icon)
+                .setTitleBackgroundColor(R.color.black)
                 .setRightClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

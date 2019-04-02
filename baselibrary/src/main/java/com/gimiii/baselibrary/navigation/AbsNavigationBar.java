@@ -1,5 +1,6 @@
 package com.gimiii.baselibrary.navigation;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -35,6 +36,13 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
         }
     }
 
+    protected void setBackgroundColor(int viewId, int color) {
+        View view = findViewById(viewId);
+        if (view != null) {
+            view.setBackgroundColor(color);
+        }
+    }
+
     protected void setText(int viewId, String text) {
         TextView tv = findViewById(viewId);
         if (tv != null) {
@@ -53,7 +61,12 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
 
     //绑定和创建View
     private void createAndBindView() {
-        if (mParams == null) {
+        if (mParams.mParent == null) {
+            ViewGroup activityRoot = (ViewGroup) ((Activity) (mParams.mContext))
+                    .getWindow().getDecorView();
+            mParams.mParent = (ViewGroup) activityRoot.getChildAt(0);
+        }
+        if (mParams.mParent == null) {
             return;
         }
         //1.创建View
@@ -77,5 +90,4 @@ public abstract class AbsNavigationBar<P extends AbsNavigationBar.Builder.AbsNav
             }
         }
     }
-
 }
